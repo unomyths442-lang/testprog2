@@ -7,7 +7,7 @@
         android:id="@+id/openButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Open DLL" />
+        android:text="Открыть DLL" />
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
