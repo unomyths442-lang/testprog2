@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using dnlib.DotNet;
@@ -21,25 +20,21 @@ namespace FieldViewer
         private ModuleDefMD? _module;
         private bool _disposed;
 
-  
         public void Load(string filePath)
         {
             if (_disposed) throw new ObjectDisposedException(nameof(AssemblyLoader));
             _module?.Dispose();
             _module = ModuleDefMD.Load(filePath, new ModuleCreationOptions()
             {
-                TryToLoadPdbFromDisk = false,
-                IgnoreAccessError = true
+                TryToLoadPdbFromDisk = false
             });
         }
 
-        
         public async Task LoadAsync(string filePath)
         {
             await Task.Run(() => Load(filePath)).ConfigureAwait(false);
         }
 
-        
         public List<FieldInfo> GetAllFields(int maxTypes = int.MaxValue)
         {
             if (_module == null)
@@ -72,7 +67,6 @@ namespace FieldViewer
             return result;
         }
 
-        
         public List<FieldInfo> GetFieldsOfType(string typeFullName)
         {
             if (_module == null)
@@ -91,7 +85,6 @@ namespace FieldViewer
             }).ToList();
         }
 
-  
         public void Dispose()
         {
             if (_disposed) return;
